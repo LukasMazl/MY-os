@@ -31,8 +31,7 @@ init_20:
     
     mov al, 00000001b
     out 0x21, al
-    sti
-    
+
     call kernel_main
 
     jmp $

@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include "idt/idt.h"
 #include "io/io.h"
+#include "memory/heap/kheap.h"
 
 uint16_t * video_mem = (uint16_t*)(0xB8000);
 uint16_t terminal_row = 0;
@@ -69,7 +70,13 @@ void print(const char* str)
 void kernel_main()
 {
     terminal_initialize();
+    print("Starting Kernel\n");   
+    // Initialize the interrupt descriptor table
     idt_init();
-    print("Hello worlds\ntest");
 
+
+    // Init kernel heap
+    kheap_init();
+    enable_interrupts();
+    print("Kernel is ready\n");
 }

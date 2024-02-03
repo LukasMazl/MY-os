@@ -19,5 +19,7 @@ struct idtr_desc
 
 void idt_init();
 void int21h_handler();
+void enable_interrupts();
+void dinable_interrupts();
 
 #endif
