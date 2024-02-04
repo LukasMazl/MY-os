@@ -1,9 +1,12 @@
 #include "kernel.h"
+#include "string/string.h"
 #include <stddef.h>
 #include <stdint.h>
 #include "idt/idt.h"
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
+#include "disk/disk.h"
+#include "fs/pparser.h"
 
 uint16_t* video_mem = 0;
 uint16_t terminal_row = 0;
@@ -50,18 +53,6 @@ void terminal_initialize()
     }   
 }
 
-
-size_t strlen(const char* str)
-{
-    size_t len = 0;
-    while(str[len])
-    {
-        len++;
-    }
-
-    return len;
-}
-
 void print(const char* str)
 {
     size_t len = strlen(str);
@@ -80,6 +71,10 @@ void kernel_main()
 
     // Initialize the heap
     kheap_init();
+    
+    // Init disk
+    disk_search_and_init();
+    
 
     // Initialize the interrupt descriptor table
     idt_init();
@@ -90,9 +85,16 @@ void kernel_main()
     // Switch to kernel paging chunk
     paging_switch(paging_4gb_chunk_get_directory(kernel_chunk));
 
+
     // Enable paging
     enable_paging();
-    
+
     // Enable the system interrupts
     enable_interrupts();
+
+    struct path_root* pat = pathparser_parse("0:/bin/shell.exe", NULL);
+    if(pat)
+    {
+
+    }
 }
