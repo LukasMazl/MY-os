@@ -74,16 +74,16 @@ void kernel_main()
 {
     terminal_initialize();
     print("Starting Kernel\n");   
-    // Initialize the interrupt descriptor table
-    idt_init();
-
 
     // Init kernel heap
     kheap_init();
 
+    // Initialize the interrupt descriptor table
+    idt_init();
+
     //Setup paging
     kernel_chunck = paging_new_4gb(PAGING_IS_WRITEABLE | PAGING_IS_WRITEABLE | PAGING_ACCESS_FROM_ALL);
-    page_switch(paging_4gb_chunk_get_directory(kernel_chunck));
+    page_switch(kernel_chunck);
     
     // enable_paging
     enable_paging();
