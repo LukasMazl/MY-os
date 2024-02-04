@@ -1,7 +1,7 @@
 #include "kheap.h"
+#include "heap.h"
 #include "config.h"
 #include "kernel.h"
-#include "heap.h"
 #include "memory/memory.h"
 
 struct heap kernel_heap;
@@ -14,11 +14,12 @@ void kheap_init()
     kernel_heap_table.total = total_table_entries;
 
     void* end = (void*)(MYOS_HEAP_ADDRESS + MYOS_HEAP_SIZE_BYTES);
-    int res = heap_create(&kernel_heap, (void*) MYOS_HEAP_ADDRESS, end, &kernel_heap_table);
-    if(res < 0) 
+    int res = heap_create(&kernel_heap, (void*)(MYOS_HEAP_ADDRESS), end, &kernel_heap_table);
+    if (res < 0)
     {
         print("Failed to create heap\n");
     }
+
 }
 
 void* kmalloc(size_t size)
@@ -29,7 +30,7 @@ void* kmalloc(size_t size)
 void* kzalloc(size_t size)
 {
     void* ptr = kmalloc(size);
-    if(!ptr)
+    if (!ptr)
         return 0;
 
     memset(ptr, 0x00, size);
