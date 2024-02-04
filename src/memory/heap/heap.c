@@ -46,7 +46,7 @@ int heap_create(struct heap* heap, void* ptr, void* end, struct heap_table* tabl
         goto out;
     }
 
-    size_t table_size = sizeof(HEAP_BLOCK_TABLE_ENTRY) * table_size;
+    size_t table_size = sizeof(HEAP_BLOCK_TABLE_ENTRY) * table->total;
     memset(table->entries, HEAP_BLOCK_TABLE_ENTRY_FREE, table_size);
     
 out:
@@ -113,7 +113,7 @@ void heap_mark_blocks_taken(struct heap* heap, int start_block, size_t total_blo
     { 
         entry |= HEAP_BLOCK_HAS_NEXT;
     }
-    for(int i = start_block; i < total_blocks; i++)
+    for(int i = start_block; i <= total_blocks; i++)
     {
         heap->table->entries[i] = entry;
         entry = HEAP_BLOCK_TABLE_ENTRY_TAKEN;
