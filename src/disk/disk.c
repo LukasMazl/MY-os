@@ -41,7 +41,7 @@ void disk_search_and_init()
     disk.sector_size = MYOS_SECTOR_SIZE;
 }
 
-struct disk* disc_get(int index)
+struct disk* disk_get(int index)
 {
     if (index != 0)
     {
