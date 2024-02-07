@@ -10,10 +10,6 @@ extern void idt_load(struct idtr_desc* ptr);
 extern void int21h();
 extern void no_interrupt();
 
-void idt_zero() {
-    print("Divide zero");
-}
-
 void int21h_handler()
 {
     print("Keyboard pressed!\n");
@@ -32,7 +28,7 @@ void idt_zero()
 
 void idt_set(int interrupt_no, void* address)
 {
-    struct idt_desc* desc = &idtr_descriptors[interrupt_no];
+    struct idt_desc* desc = &idt_descriptors[interrupt_no];
     desc->offset_1 = (uint32_t) address & 0x0000ffff;
     desc->selector = KERNEL_CODE_SELECTOR;
     desc->zero = 0x00;

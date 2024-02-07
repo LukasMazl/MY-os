@@ -25,11 +25,7 @@ struct paging_4gb_chunk* paging_new_4gb(uint8_t flags)
     return chunk_4gb;
 }
 
-<<<<<<< HEAD
-void paging_switch(uint32_t* directory)
-=======
-void page_switch(struct paging_4gb_chunk* directory)
->>>>>>> main
+void paging_switch(struct paging_4gb_chunk* directory)
 {
     paging_load_directory(directory->directory_entry);
     current_directory = directory->directory_entry;
