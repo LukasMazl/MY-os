@@ -67,6 +67,7 @@ static struct paging_4gb_chunk* kernel_chunk = 0;
 void kernel_main()
 {
     terminal_initialize();
+<<<<<<< HEAD
     print("Hello world!\ntest");
 
     // Initialize the heap
@@ -75,12 +76,24 @@ void kernel_main()
     // Init disk
     disk_search_and_init();
     
+=======
+    print("Starting Kernel\n");   
+
+    // Init kernel heap
+    kheap_init();
+>>>>>>> main
 
     // Initialize the interrupt descriptor table
     idt_init();
 
+<<<<<<< HEAD
     // Setup paging
     kernel_chunk = paging_new_4gb(PAGING_IS_WRITEABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL);
+=======
+    //Setup paging
+    kernel_chunck = paging_new_4gb(PAGING_IS_WRITEABLE | PAGING_IS_WRITEABLE | PAGING_ACCESS_FROM_ALL);
+    page_switch(kernel_chunck);
+>>>>>>> main
     
     // Switch to kernel paging chunk
     paging_switch(paging_4gb_chunk_get_directory(kernel_chunk));

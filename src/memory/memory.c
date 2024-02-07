@@ -7,7 +7,6 @@ void* memset(void* ptr, int c, size_t size)
     {
         c_ptr[i] = (char) c;
     }
-    
     return ptr;
 }
 
