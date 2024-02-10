@@ -17,4 +17,7 @@
 
 #define MYOS_MAX_PATH 200
 
+#define MYOS_MAX_FILESYSTEMS 12
+#define MYOS_MAX_FILE_DESCRIPTORS 512
+
 #endif
