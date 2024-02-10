@@ -1,5 +1,4 @@
 #include "heap.h"
-#include "kernel.h"
 #include "status.h"
 #include "memory/memory.h"
 #include <stdbool.h>

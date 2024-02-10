@@ -1,6 +1,6 @@
 #include "pparser.h"
 #include "config.h"
-#include "kernel.h"
+#include "logger/logger.h"
 #include "status.h"
 #include "string/string.h"
 #include "memory/heap/kheap.h"
