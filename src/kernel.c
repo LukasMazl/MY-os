@@ -44,6 +44,10 @@ void kernel_main()
     if(fd)
     {
         println("We opened hello.txt");
+        char buf[14];
+        buf[13] = 0x00;
+        fread(buf, 14, 1, fd);
+        println(buf);
     }
     while (1) { }
     
