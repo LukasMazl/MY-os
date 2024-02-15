@@ -10,6 +10,12 @@
 #include "fs/pparser.h"
 #include "fs/file.h"
 
+void panic(const char* message)
+{
+    println(message);
+    while(1) {}
+}
+
 static struct paging_4gb_chunk* kernel_chunk = 0;
 void kernel_main()
 {
@@ -43,11 +49,9 @@ void kernel_main()
     int fd = fopen("0:/hello.txt", "r");
     if(fd)
     {
-        println("We opened hello.txt");
-        char buf[14];
-        buf[13] = 0x00;
-        fread(buf, 14, 1, fd);
-        println(buf);
+        struct file_stat s;
+        fstat(fd, &s);
+        println(int_to_char(s.filesize));
     }
     while (1) { }
     
