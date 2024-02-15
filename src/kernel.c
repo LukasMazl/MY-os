@@ -14,7 +14,7 @@ static struct paging_4gb_chunk* kernel_chunk = 0;
 void kernel_main()
 {
     terminal_initialize();
-    print("Hello world!\ntest");
+    println("Hello world!");
 
     // Initialize the heap
     kheap_init();
@@ -34,16 +34,17 @@ void kernel_main()
     // Switch to kernel paging chunk
     paging_switch(kernel_chunk);
 
-
     // Enable paging
     enable_paging();
 
     // Enable the system interrupts
     enable_interrupts();
 
-    struct path_root* pat = pathparser_parse("0:/bin/shell.exe", NULL);
-    if(pat)
+    int fd = fopen("0:/hello.txt", "r");
+    if(fd)
     {
-
+        println("We opened hello.txt");
     }
+    while (1) { }
+    
 }
