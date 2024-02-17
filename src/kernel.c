@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "idt/idt.h"
+#include "isr80h/isr80h.h"
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
 #include "disk/disk.h"
@@ -17,14 +18,8 @@
 #include "memory/memory.h"
 #include "status.h"
 
-void panic(const char* message)
-{
-    println(message);
-    while(1) {}
-}
-
+static struct paging_4gb_chunk* kernel_chunk = 0;
 struct tss tss;
-
 struct gdt gdt_real[MYOS_TOTAL_GDT_SEGMENTS];
 struct gdt_structured gdt_structured[MYOS_TOTAL_GDT_SEGMENTS] = 
 {
@@ -36,7 +31,18 @@ struct gdt_structured gdt_structured[MYOS_TOTAL_GDT_SEGMENTS] =
     {.base = (uint32_t)&tss, .limit=sizeof(tss), .type= 0xE9} //TSS segment
 };
 
-static struct paging_4gb_chunk* kernel_chunk = 0;
+void panic(const char* message)
+{
+    println(message);
+    while(1) {}
+}
+
+void kernel_page()
+{
+    kernel_registers();
+    paging_switch(kernel_chunk);   
+}
+
 void kernel_main()
 {
     terminal_initialize();
@@ -78,6 +84,8 @@ void kernel_main()
     // Enable paging
     enable_paging();
     println("enabled paging");
+
+    isr80_register_commands();
     // Enable the system interrupts
 //    enable_interrupts();
 

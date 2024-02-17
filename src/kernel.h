@@ -3,6 +3,8 @@
 
 void kernel_main();
 void panic(const char* message);
+void kernel_page();
+void kernel_registers();
 
 
 #define ERROR(value) (void*)(value)
