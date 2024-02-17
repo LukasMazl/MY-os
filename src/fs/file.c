@@ -251,7 +251,10 @@ int fclose(int fd)
     }
 
     res = desc->filesystem->close(desc->private);
-    file_free_descriptor(desc);
+    if(res == MYOS_ALL_OK)
+    {
+        file_free_descriptor(desc);
+    }
 out:
     return res;
 }
