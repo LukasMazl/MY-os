@@ -1,5 +1,6 @@
 #include "logger.h"
 #include "string/string.h"
+#include "kernel.h"
 
 uint16_t* video_mem = 0;
 uint16_t terminal_row = 0;
@@ -81,6 +82,7 @@ void eprint(const char* message)
 void printe(int e)
 {
     print("Error status: ");
-    print(int_to_char(e));
+    print(int_to_char(e*-1));
     print("\n");
+    panic("ERROR!!!!!");
 }

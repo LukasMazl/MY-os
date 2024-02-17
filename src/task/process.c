@@ -39,6 +39,7 @@ static int process_load_binary(const char* filename, struct process* process)
     int fd = fopen(filename, "r");
     if(!fd)
     {
+        println("fopen error");
         res = -EIO;
         goto out;
     }
@@ -47,6 +48,7 @@ static int process_load_binary(const char* filename, struct process* process)
     res = fstat(fd, &stat);
     if(res != MYOS_ALL_OK)
     {
+        println("fstat error");
         goto out;
     }
 

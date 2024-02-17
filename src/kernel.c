@@ -50,6 +50,7 @@ void kernel_main()
 
     // Initialize the heap
     kheap_init();
+    println("Heap init");
     
     //Init filesystem
     fs_init();
@@ -76,7 +77,7 @@ void kernel_main()
 
     // Enable paging
     enable_paging();
-
+    println("enabled paging");
     // Enable the system interrupts
 //    enable_interrupts();
 
@@ -84,11 +85,11 @@ void kernel_main()
     int res = process_load("0:/blank.bin", &process);
     if(res != MYOS_ALL_OK)
     {
-        printe(res);
+       // printe(res);
         panic("Failed to load blank.bin");
     }
-
     task_run_first_ever_first_task();
+    println("Kernel init done");
     while (1) { }
     
 }

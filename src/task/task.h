@@ -15,33 +15,34 @@ struct registers
     uint32_t edx;
     uint32_t ecx;
     uint32_t eax;
-    
+
     uint32_t ip;
     uint32_t cs;
     uint32_t flags;
     uint32_t esp;
     uint32_t ss;
-};
+} __attribute__((packed));
 
 struct process;
 
 struct task
 {
-    // The page directory of the task
+    /**
+     * The page directory of the task
+     */
     struct paging_4gb_chunk* page_directory;
 
     // The registers of the task when the task is not running
     struct registers registers;
 
-    // Task process
+    // The process of the task
     struct process* process;
 
-    // The next task in the Linked list
+    // The next task in the linked list
     struct task* next;
 
-    // The prev task in the linked list
+    // Previous task in the linked list
     struct task* prev;
-
 };
 
 struct task* task_new();
