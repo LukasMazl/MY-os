@@ -77,3 +77,10 @@ void eprint(const char* message)
         println(message);
     }
 }
+
+void printe(int e)
+{
+    print("Error status: ");
+    print(int_to_char(e));
+    print("\n");
+}

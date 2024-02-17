@@ -11,8 +11,11 @@
 #include "fs/file.h"
 #include "task/tss.h"
 #include "gdt/gdt.h"
+#include "task/task.h"
+#include "task/process.h"
 #include "config.h"
 #include "memory/memory.h"
+#include "status.h"
 
 void panic(const char* message)
 {
@@ -75,15 +78,17 @@ void kernel_main()
     enable_paging();
 
     // Enable the system interrupts
-    enable_interrupts();
+//    enable_interrupts();
 
-    int fd = fopen("0:/hello.txt", "r");
-    if(fd)
+    struct process* process = 0;
+    int res = process_load("0:/blank.bin", &process);
+    if(res != MYOS_ALL_OK)
     {
-        struct file_stat s;
-        fstat(fd, &s);
-        println(int_to_char(s.filesize));
+        printe(res);
+        panic("Failed to load blank.bin");
     }
+
+    task_run_first_ever_first_task();
     while (1) { }
     
 }
