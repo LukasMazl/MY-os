@@ -98,6 +98,21 @@ char* int_to_char(int number)
     return str;
 }
 
+void strncpy(char* dest, const char* src, int size)
+{
+    int i = 0;
+    for(i = 0; i < size -1; i++)
+    {
+        if(src[i] == 0x00)
+        {
+            break;
+        }
+
+        dest[i] = src[i];
+    }
+    dest[i] = 0x00;
+}
+
 int strcmp(const char* str1, const char* str2, int n)
 {
     unsigned char u1, u2;
