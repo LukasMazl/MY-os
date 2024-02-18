@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "idt/idt.h"
+#include "keyboard/keyboard.h"
 #include "isr80h/isr80h.h"
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
@@ -88,6 +89,8 @@ void kernel_main()
     isr80_register_commands();
     // Enable the system interrupts
 //    enable_interrupts();
+
+    keyboard_init();
 
     struct process* process = 0;
     int res = process_load("0:/blank.bin", &process);

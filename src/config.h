@@ -35,4 +35,7 @@
 
 #define USER_DATA_SEGMENT 0x23
 #define USER_CODE_SEGMENT 0x1b
+
+#define MYOS_KEYBOARD_BUFFER_SIZE 1024
+
 #endif
