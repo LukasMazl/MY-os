@@ -6,6 +6,7 @@
 #include "kernel.h"
 #include "task/task.h"
 #include "status.h"
+#include "task/process.h"
 
 struct idt_desc idt_descriptors[MYOS_TOTAL_INTERRUPTS];
 struct idtr_desc idtr_descriptor;
@@ -22,6 +23,18 @@ extern void isr80h_wrapper();
 void no_interrupt_handler()
 {
     outb(0x20, 0x20);
+}
+
+void idt_hanlde_exception()
+{
+    process_terminate(task_current()->process);
+
+    task_next();
+}
+
+void idt_clock()
+{
+    task_next();
 }
 
 void interrupt_handler(int interrupt, struct interrupt_frame* frame)
@@ -62,10 +75,15 @@ void idt_init()
         idt_set(i, interrupt_pointer_table[i]);
     }
 
+    for(int i = 0; i < 0x20; i++)
+    {
+        idt_register_interrupt_callback(i, idt_hanlde_exception);
+    }
     idt_set(0, idt_zero);
+    
     idt_set(0x80, isr80h_wrapper);
 
-
+    idt_register_interrupt_callback(0x20, idt_clock);
     // Load the interrupt descriptor table
     idt_load(&idtr_descriptor);
 }
