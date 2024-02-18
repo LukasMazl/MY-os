@@ -1,6 +1,6 @@
 #include "pparser.h"
 #include "config.h"
-#include "kernel.h"
+#include "logger/logger.h"
 #include "status.h"
 #include "string/string.h"
 #include "memory/heap/kheap.h"
@@ -17,7 +17,6 @@ static int pathparser_get_drive_by_path(const char** path)
 {
     if(!pathparser_path_valid_format(*path))
     {
-        print("hiiii");
         return -EBADPATH;
     }
 
