@@ -1,5 +1,6 @@
 #include "task.h"
 #include "kernel.h"
+#include "loader/formats/elfloader.h"
 #include "status.h"
 #include "idt/idt.h"
 #include "config.h"
@@ -71,6 +72,10 @@ int task_init(struct task* task, struct process* process)
     }
 
     task->registers.ip = MYOS_PROGRAM_VIRTUAL_ADDRESS;
+    if(process->filetype == PROCESS_FILE_TYPE_ELF)
+    {
+        task->registers.ip = elf_header(process->elf_file)->e_entry;
+    }
     task->registers.ss = USER_DATA_SEGMENT;
     task->registers.cs = USER_CODE_SEGMENT;
     task->registers.esp = MYOS_PROGRAM_VIRTUAL_STACK_ADDRESS_START;

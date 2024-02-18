@@ -189,7 +189,7 @@ int elf_load(const char* filename, struct elf_file** file_out)
     fd = res;
     struct file_stat stat;
     res = fstat(fd, &stat);
-    if(res <= 0)
+    if(res < 0)
     {
         goto out;
     }
