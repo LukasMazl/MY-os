@@ -1,6 +1,7 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 #include <stdint.h>
+#include <stddef.h>
 #include "config.h"
 #include "task.h"
 
@@ -48,4 +49,7 @@ struct process* process_current();
 int process_switch(struct process* process);
 int process_load_switch(const char* filename, struct process** process);
 int process_load_for_slot(const char* filename, struct process** process, int process_slot);
+void* process_malloc(struct process* process, size_t size);
+void process_free(struct process* process, void* ptr_to_free);
+
 #endif
