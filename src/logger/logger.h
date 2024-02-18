@@ -21,6 +21,8 @@ void print(const char* str);
 void println(const char* str);
 void eprint(const char* message);
 void terminal_initialize();
+
+void putchar(char c);
 void printe(int e);
 
 #endif

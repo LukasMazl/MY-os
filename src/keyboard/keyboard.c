@@ -53,20 +53,25 @@ void keyboard_backspace(struct process* process)
 
 void keyboard_push(char c)
 {
-    struct process* proc = process_current();
-    if(!proc) 
+    struct process* process = process_current();
+    if (!process)
     {
         return;
     }
 
-    int real_index = keyboard_get_tail_index(proc);
-    proc->keyboard.buffer[real_index] = c;
-    proc->keyboard.tail++;
+    if(c == 0)
+    {
+        return;
+    }
+
+    int real_index = keyboard_get_tail_index(process);
+    process->keyboard.buffer[real_index] = c;
+    process->keyboard.tail++;
 }
 
 char keyboard_pop()
 {
-    if(!task_current())
+    if (!task_current())
     {
         return 0;
     }
@@ -74,8 +79,9 @@ char keyboard_pop()
     struct process* process = task_current()->process;
     int real_index = process->keyboard.head % sizeof(process->keyboard.buffer);
     char c = process->keyboard.buffer[real_index];
-    if(c == 0x00)
+    if (c == 0x00)
     {
+        // Nothing to pop return zero.
         return 0;
     }
 

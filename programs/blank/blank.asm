@@ -1,15 +1,26 @@
 [BITS 32]
+
 section .asm
 
 global _start
 
 _start:
-    push message
-    mov eax, 1 ; Command print
+
+_loop:
+    call getkey
+    push eax
+    mov eax, 3
     int 0x80
     add esp, 4
+    jmp _loop
 
-    jmp $
+
+getkey:
+    mov eax, 2 ; Command get key
+    int 0x80
+    cmp eax, 0x00
+    je getkey
+    ret
 
 
 section .data
