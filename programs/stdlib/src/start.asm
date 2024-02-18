@@ -1,10 +1,12 @@
 [BITS 32]
 
 global _start
-extern main
+extern c_start
+extern myos_exit
 
 section .asm
 
 _start:
-    call main
+    call c_start
+    call myos_exit
     ret

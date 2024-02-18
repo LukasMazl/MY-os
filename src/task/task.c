@@ -168,6 +168,27 @@ int task_page_task(struct task* task)
     return 0;
 }
 
+void task_next()
+{
+    struct task* next_task = task_get_next();
+    if (!next_task)
+    {
+        panic("No more tasks!\n");
+    }
+
+    task_switch(next_task);
+    task_return(&next_task->registers);
+}
+
+void* task_virtual_address_to_physical(struct task* task, void* virtual_address)
+{
+    void* physical_address = 0;
+    task_page_task(task);
+    physical_address = paging_get_physical_address(task->page_directory->directory_entry, virtual_address);
+    kernel_page();
+    return physical_address;
+}
+
 void task_run_first_ever_first_task()
 {
     if(!current_task)
